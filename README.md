@@ -27,7 +27,17 @@ $ forge build
 ### Test
 
 ```shell
-$ forge test
+$ forge test 
+```
+
+Run test with matching function
+```shell
+$ forge test --match-test <testYourTestName>
+```
+
+Test how much of your contracts your test cover by running this command:
+```shell
+$ forge coverage
 ```
 
 ### Gas Snapshots
