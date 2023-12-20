@@ -40,8 +40,14 @@ Test how much of your contracts your test cover by running this command:
 $ forge coverage
 ```
 
-### Gas Snapshots
+get moer inforamtion on what functions still need to be tested and output it to coverage.txt
+```shell
+$ forge coverage --report debug > coverage.txt
+```
 
+### Gas Estimation
+
+You can estimate how much gas things cost by running:
 ```shell
 $ forge snapshot
 ```

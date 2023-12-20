@@ -50,6 +50,7 @@ contract Raffle is VRFConsumerBaseV2 {
     /** EVENTS */
     event RaffleEntered(address indexed player);
     event WinnerPicked(address indexed winner);
+    event RequestedRaffleWinner(uint256 indexed requestId);
 
     /** CONSTRUCTOR */
     constructor(
@@ -102,7 +103,6 @@ contract Raffle is VRFConsumerBaseV2 {
     function checkUpkeep(
         bytes memory /* checkData */
     ) public view returns (bool upkeepNeeded, bytes memory /* performData */) {
-        // Check if time is up
         bool timeHasPassed = (block.timestamp - s_lastTimeStamp) >= i_interval;
         bool isOpen = RaffleState.OPEN == s_raffleState;
         bool hasBalance = address(this).balance > 0;
@@ -128,15 +128,14 @@ contract Raffle is VRFConsumerBaseV2 {
         // Set Raffle to CALCULATING
         s_raffleState = RaffleState.CALCULATING;
         // 1. Request RNG from Chainlink VRF
-        i_vrfCoordinator.requestRandomWords(
+        uint256 request = i_vrfCoordinator.requestRandomWords(
             i_gasLane,
             i_subscriptionId,
             REQUEST_CONFIRMATIONS,
             i_callbackGasLimit,
             NUM_WORDS
         );
-
-        // 2. Get random number
+        emit RequestedRaffleWinner(request);
     }
 
     function fulfillRandomWords(
@@ -161,7 +160,9 @@ contract Raffle is VRFConsumerBaseV2 {
         }
     }
 
-    /** GETTER FUNCTIONS */
+    /**
+     * GETTER FUNCTIONS
+     */
     function getEntranceFee() external view returns (uint256) {
         return i_entranceFee;
     }

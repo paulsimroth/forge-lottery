@@ -4,6 +4,7 @@ pragma solidity ^0.8.19;
 import {Script} from "forge-std/Script.sol";
 import {Raffle} from "../src/Raffle.sol";
 import {VRFCoordinatorV2Mock} from "@chainlink/contracts/src/v0.8/mocks/VRFCoordinatorV2Mock.sol";
+import {LinkToken} from "../test/mocks/LinkToken.sol";
 
 /**
  * @title HelperConfig
@@ -20,6 +21,7 @@ contract HelperConfig is Script {
         bytes32 gasLane;
         uint64 subscriptionId;
         uint32 callbackGasLimit;
+        address linkToken;
     }
 
     NetworkConfig public activeNetworkConfig;
@@ -55,7 +57,9 @@ contract HelperConfig is Script {
                 /// @todo Update subscriptionId to correct Id
                 subscriptionId: 0,
                 /// Gas limit set to 500.000
-                callbackGasLimit: 500000
+                callbackGasLimit: 500000,
+                // LINK contract address from Chainlink Docs
+                linkToken: 0x779877A7B0D9E8603169DdbD7836e478b4624789
             });
     }
 
@@ -73,7 +77,9 @@ contract HelperConfig is Script {
                 /// @todo Update subscriptionId to correct Id
                 subscriptionId: 0,
                 /// Gas limit set to 500.000
-                callbackGasLimit: 500000
+                callbackGasLimit: 500000,
+                // LINK contract address from Chainlink Docs
+                linkToken: 0x514910771AF9Ca656af840dff83E8264EcF986CA
             });
     }
 
@@ -97,6 +103,7 @@ contract HelperConfig is Script {
             baseFee,
             gasPriceLink
         );
+        LinkToken link = new LinkToken();
         vm.stopBroadcast();
         return
             NetworkConfig({
@@ -104,13 +111,14 @@ contract HelperConfig is Script {
                 interval: 30,
                 /// @param vrfCoordinator taken from Chainlink VRF Docs
                 vrfCoordinator: address(vrfCoordinatorMock),
-                /// @param gasLane taken from Chainlink VRF docs
-                /// @dev docs use the term keyHash; here the 150 gwei Key Hash is used
+                /// @param gasLane does not matter on anvil
                 gasLane: 0x474e34a077df58807dbe9c96d3c009b23b3c6d0cce433e59bbf5b34f823bc56c,
                 /// script will add @param subscriptionId
                 subscriptionId: 0,
                 /// Gas limit set to 500.000
-                callbackGasLimit: 500000
+                callbackGasLimit: 500000,
+                // LINK contract address from mock link token contract deployed localy
+                linkToken: address(link)
             });
     }
 }
