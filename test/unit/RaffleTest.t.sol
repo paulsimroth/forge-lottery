@@ -9,8 +9,8 @@ import {Vm} from "forge-std/Vm.sol";
 import {VRFCoordinatorV2Mock} from "@chainlink/contracts/src/v0.8/mocks/VRFCoordinatorV2Mock.sol";
 
 contract RaffleTest is Test {
-    Raffle raffle;
-    HelperConfig helperConfig;
+    Raffle public raffle;
+    HelperConfig public helperConfig;
 
     /** EVENTS */
     event RaffleEntered(address indexed player);
@@ -23,6 +23,13 @@ contract RaffleTest is Test {
         // manipulate blocktime
         vm.warp(block.timestamp + interval + 1);
         vm.roll(block.number + 1);
+        _;
+    }
+
+    modifier skipOnFork() {
+        if (block.chainid != 31337) {
+            return;
+        }
         _;
     }
 
@@ -53,7 +60,8 @@ contract RaffleTest is Test {
             gasLane,
             subscriptionId,
             callbackGasLimit,
-            link
+            link,
+
         ) = helperConfig.activeNetworkConfig();
     }
 
@@ -208,7 +216,7 @@ contract RaffleTest is Test {
 
     function testFulfillRandomWordsCanOnlyBeCalledAfterPerformUpkeep(
         uint256 randomRequestId
-    ) public raffleEnteredAndTimePassed {
+    ) public skipOnFork raffleEnteredAndTimePassed {
         // Arrange
         vm.expectRevert("nonexistent request");
         VRFCoordinatorV2Mock(vrfCoordinator).fulfillRandomWords(
@@ -219,6 +227,7 @@ contract RaffleTest is Test {
 
     function testFulfillRandomWordsPicksWinnerResetsAndSendsFunds()
         public
+        skipOnFork
         raffleEnteredAndTimePassed
     {
         // Arrange
