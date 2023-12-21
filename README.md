@@ -48,9 +48,13 @@ Test how much of your contracts your test cover by running this command:
 $ forge coverage
 ```
 
-get moer inforamtion on what functions still need to be tested and output it to coverage.txt
+get more inforamtion on what functions still need to be tested and output it to coverage.txt
 ```shell
 $ forge coverage --report debug > coverage.txt
+```
+Debug tool; With this you can navigate throught your contract opcode
+```shell
+$ forge test --debug <testYourTestName>
 ```
 
 ### Gas Estimation
