@@ -2,7 +2,7 @@
 
 ## Objective
 
-This is a proofably random smart contract lottery built with foundry.
+This is a proofably random smart contract lottery built with foundry. This project is a smart contract lottery using Chainlink VRF to determine a random winner. Chainlink automation is used to call the functions to determine the winner. This project does also include the relevant tests.
 
 1. Users can enter by purchasing a ticket
 2. After a specific time period the lottery will draw a winner
@@ -18,7 +18,15 @@ This is a proofably random smart contract lottery built with foundry.
 
 ## Usage
 
-### Build
+### Project Setup
+
+If you want to clone this project run the following command
+```shell
+$ foundryup
+$ make install
+```
+
+### Build and Compile Contracts
 
 ```shell
 $ forge build
@@ -64,16 +72,22 @@ $ anvil
 $ forge script script/DeployRaffle.s.sol --rpc-url <your_rpc_url> --private-key <your_private_key>
 ```
 
-### Cast
-
+or use the commands in the makefile
+#### deploy to local Anvil chain
+here make sure to start up Anvil before running this command
 ```shell
-$ cast <subcommand>
+$ make deploy
+```
+#### deploy to Sepolia Testnet
+```shell
+$ make deploy ARGS="--network sepolia"
 ```
 
-### Help
+#### NOTE FOR DEPLOYMENT
+After deploying the contract you must manually register a new Upkeep on Chainlink Automation using the contract address!
 
+### Cast
+You can interact with your contracts from the command line useing cast
 ```shell
-$ forge --help
-$ anvil --help
-$ cast --help
+$ cast <subcommand>
 ```
