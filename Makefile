@@ -1,5 +1,9 @@
 -include .env
 
+## Test with local fork of Sepolia Testnet
+forktest-sepolia:
+	forge test --fork-url $(SEPOLIA_RPC_URL)
+
 ## Deploy contract on Anvil
 deploy-anvil:
 	forge script script/DeployRaffle.s.sol:DeployRaffle --rpc-url $(ANVIL_RPC_URL) --private-key $(ANVIL_PRIVATE_KEY) --broadcast -vvvv

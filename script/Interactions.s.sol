@@ -89,7 +89,7 @@ contract AddConsumer is Script {
         uint64 subId
     ) public {
         console.log("ADDING CONSUMER CONTRACT:", raffle);
-        console.log("UISNG VRF COORDINATOR:", vrfCoordinator);
+        console.log("USING VRF COORDINATOR:", vrfCoordinator);
         console.log("ON CHAIN ID:", block.chainid);
 
         vm.startBroadcast();
