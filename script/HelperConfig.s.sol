@@ -58,7 +58,7 @@ contract HelperConfig is Script {
                 /// @param gasLane taken from Chainlink VRF docs
                 /// @dev docs use the term keyHash; here the 150 gwei Key Hash is used
                 gasLane: 0x474e34a077df58807dbe9c96d3c009b23b3c6d0cce433e59bbf5b34f823bc56c,
-                /// @todo Update subscriptionId to correct Id
+                /// script will add @param subscriptionId
                 subscriptionId: 0,
                 /// Gas limit set to 500.000
                 callbackGasLimit: 500000,
@@ -80,7 +80,7 @@ contract HelperConfig is Script {
                 /// @param gasLane taken from Chainlink VRF docs
                 /// @dev docs use the term keyHash; here the 500 gwei Key Hash is used; 200 and 1000 gwei are also possible
                 gasLane: 0xff8dedfbfa60af186cf3c830acbc32c05aae823045ae5ea7da1e45fbfaba4f92,
-                /// @todo Update subscriptionId to correct Id
+                /// script will add @param subscriptionId
                 subscriptionId: 0,
                 /// Gas limit set to 500.000
                 callbackGasLimit: 500000,
