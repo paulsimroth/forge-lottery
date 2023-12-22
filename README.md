@@ -22,7 +22,7 @@ This is a proofably random smart contract lottery built with foundry. This proje
 
 If you want to clone this project run the following command
 ```shell
-$ foundryup
+$ forge init
 $ make install
 ```
 
